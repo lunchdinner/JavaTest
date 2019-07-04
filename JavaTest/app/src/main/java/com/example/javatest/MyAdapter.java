@@ -1,5 +1,6 @@
 package com.example.javatest;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
 
     ArrayList<String> mDataset;
+    public View.OnClickListener myAdapterListener;
+
 
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -26,7 +29,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
         }
     }
 
-    public MyAdapter (ArrayList<String> mDataset) {
+    public MyAdapter (Context context, ArrayList<String> mDataset) {
         this.mDataset = mDataset;
     }
 
@@ -44,15 +47,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
         final String data;
         data = mDataset.get(position);
         holder.mTextView.setText(mDataset.get(position));
-        holder.mTextView.setOnClickListener(new View.OnClickListener(){
+        holder.mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //トーストはエラーが出るので一旦放置
-                //Toast toast = Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(v.getContext(),"OK",Toast.LENGTH_LONG).show();
                 Log.d("recycler", "OK");
             }
         });
+    }
+
+    public void setOnItemClickListener(View.OnClickListener listener){
+        this.myAdapterListener = listener;
     }
 
     @Override
